@@ -26,10 +26,55 @@ function numberHandler(number) {
   }
 }
 
+function operationHandler(operation) {
+  console.log(operation.innerHTML)
+  if (operation.innerHTML === "√") {
+    previousOperand.innerHTML = currentOperand.innerHTML + " " + operation.innerHTML;
+    currentOperand.innerHTML = equalsHandler(operation.innerHTML[0]);
+    equaled = true;
+  }
+  else if (operation.innerHTML[0] === "x") {
+    previousOperand.innerHTML = currentOperand.innerHTML + " " + operation.innerHTML;
+    currentOperand.innerHTML = "";
+  }
+  else if (currentOperand.innerHTML === "" && operation.innerHTML === "-") {
+    currentOperand.innerHTML = operation.innerHTML;
+
+  }
+  else if (currentOperand.innerHTML !== "" && previousOperand.innerHTML === "") {
+    previousOperand.innerHTML = currentOperand.innerHTML + " " + operation.innerHTML;
+    currentOperand.innerHTML = "";
+  }
+  else if (currentOperand.innerHTML !== "" && previousOperand.innerHTML !== "" && previousOperand.innerHTML[previousOperand.innerHTML.length - 2] !== "x" && previousOperand.innerHTML[previousOperand.innerHTML.length - 1] !== "√") {
+    previousOperand.innerHTML = equalsHandler(previousOperand.innerHTML[previousOperand.innerHTML.length - 1]) + " " + operation.innerHTML;
+    currentOperand.innerHTML = "";
+  }
+  else {
+    previousOperand.innerHTML = currentOperand.innerHTML + " " + operation.innerHTML
+    currentOperand.innerHTML = ""
+  }
+}
+
 container.addEventListener("click", (event) => {
   let button = event.target;
   let dataset = button.dataset;
   if (dataset.number === "") {
     numberHandler(button);
+  }
+  else if (dataset.operation === "") {
+    operationHandler(button);
+  }
+  else if (dataset.delete === "" && !equaled) {
+    currentOperand.innerHTML = currentOperand.innerHTML.slice(0, currentOperand.innerHTML.length - 1);
+  }
+  else if (dataset.allClear === "") {
+    currentOperand.innerHTML = "";
+    previousOperand.innerHTML = "";
+    equaled = false;
+  }
+  else if (dataset.equals === "" && currentOperand.innerHTML !== "" && previousOperand.innerHTML !== "") {
+    currentOperand.innerHTML = equalsHandler(previousOperand.innerHTML[previousOperand.innerHTML.length - 1]);
+    previousOperand.innerHTML = "";
+    equaled = true;
   }
 });
