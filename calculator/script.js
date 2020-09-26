@@ -55,6 +55,25 @@ function operationHandler(operation) {
   }
 }
 
+function equalsHandler(operation) {
+  previousOperandValue = 10 * parseFloat(previousOperand.innerHTML);
+  currentOperandValue = 10 * parseFloat(currentOperand.innerHTML);
+  switch (operation) {
+    case "÷":
+      return (previousOperandValue / currentOperandValue);
+    case "*":
+      return (previousOperandValue * currentOperandValue) / 100;
+    case "+":
+      return (previousOperandValue + currentOperandValue) / 10;
+    case "-":
+      return (previousOperandValue - currentOperandValue) / 10;
+    case ">":
+      return Math.pow(parseFloat(previousOperandValue / 10), currentOperandValue / 10);
+    case "√":
+      return currentOperandValue >= 0 ? Math.sqrt(currentOperandValue / 10) : "Invalid input";
+  }
+}
+
 container.addEventListener("click", (event) => {
   let button = event.target;
   let dataset = button.dataset;
