@@ -8,15 +8,15 @@ function numberHandler(number) {
     currentOperand.innerHTML = number.innerHTML;
   }
   else if (currentOperand.innerHTML === "0" && number.innerHTML === "0") {
-
+    return;
   }
   else if (currentOperand.innerHTML === "0" && number.innerHTML !== "0" && number.innerHTML !== ".") {
     currentOperand.innerHTML = number.innerHTML;
   }
   else if ((currentOperand.innerHTML.includes(".") || currentOperand.innerHTML === "" || equaled) && number.innerHTML === ".") {
-
+    return;
   }
-  else if (equaled && number.innerHTML !== ".") {
+  else if (equaled && number.innerHTML !== "." && previousOperand.innerHTML === "") {
     currentOperand.innerHTML = number.innerHTML;
     previousOperand.innerHTML = "";
     equaled = false;
@@ -27,13 +27,12 @@ function numberHandler(number) {
 }
 
 function operationHandler(operation) {
-  console.log(operation.innerHTML)
-  if (operation.innerHTML === "√") {
+  if (operation.innerHTML === "√" && currentOperand.innerHTML !== "") {
     previousOperand.innerHTML = currentOperand.innerHTML + " " + operation.innerHTML;
     currentOperand.innerHTML = equalsHandler(operation.innerHTML[0]);
     equaled = true;
   }
-  else if (operation.innerHTML[0] === "x") {
+  else if (operation.innerHTML[0] === "x" && currentOperand.innerHTML !== "") {
     previousOperand.innerHTML = currentOperand.innerHTML + " " + operation.innerHTML;
     currentOperand.innerHTML = "";
   }
@@ -49,9 +48,9 @@ function operationHandler(operation) {
     previousOperand.innerHTML = equalsHandler(previousOperand.innerHTML[previousOperand.innerHTML.length - 1]) + " " + operation.innerHTML;
     currentOperand.innerHTML = "";
   }
-  else {
-    previousOperand.innerHTML = currentOperand.innerHTML + " " + operation.innerHTML
-    currentOperand.innerHTML = ""
+  else if (currentOperand.innerHTML !== "") {
+    previousOperand.innerHTML = currentOperand.innerHTML + " " + operation.innerHTML;
+    currentOperand.innerHTML = "";
   }
 }
 
