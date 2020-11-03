@@ -1,2 +1,3 @@
-# johnyspice-JS2020Q3
-Private repository for @johnyspice
+# Calculator  
+Simple calculator  
+Deployment: https://johnyspice.github.io/calculator/calculator/
